@@ -13,27 +13,13 @@ class Ship(Character):
         self.shots = []
         self.health = 3
 
-    def shot(self, win):
-        self.shots += [Ship.Shot(self.x + Main.SCREEN_WIDTH // 40, self.y)]
-        self.draw(win)
+    def shot(self):
+        self.shots += [Character.Shot(self.x + Main.SCREEN_WIDTH // 40, self.y)]
+        self.draw()
 
-    def draw_health(self, win):
+    def draw_health(self):
         image = pygame.image.load(os.path.join('images', self.image_name))
         image = pygame.transform.scale(image, (Main.SCREEN_WIDTH // 40, Main.SCREEN_HEIGHT // 40)).convert_alpha()
         for i in range(0, self.health):
-            win.blit(image, (Main.SCREEN_WIDTH - (i + 2) * (Main.SCREEN_WIDTH // 40), 10))
+            Main.win.blit(image, (Main.SCREEN_WIDTH - (i + 2) * (Main.SCREEN_WIDTH // 40), 10))
 
-    class Shot:
-        def __init__(self, _x, _y):
-            self.x = _x
-            self.y = _y
-
-        def draw(self, win, ship):
-            pygame.draw.rect(win, Main.red, (self.x - 1, self.y, 4, 8))
-            if self.y > Main.SCREEN_HEIGHT:
-                ship.shots.remove(self)
-
-        def move(self):
-            x_diff, y_diff = 0, -8
-            self.x += x_diff
-            self.y += y_diff

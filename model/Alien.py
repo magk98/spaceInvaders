@@ -6,7 +6,6 @@ class Alien(Character):
         super(Alien, self).__init__(_x, _y, _speed, _gun_speed)
         self.image_name = 'alien.png'
 
-
     def move(self, x_diff, y_diff):
         self.x += x_diff
         self.y += y_diff

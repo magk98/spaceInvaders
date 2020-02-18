@@ -1,12 +1,16 @@
+import random
+
 import pygame
 
 from model import Level
+from model.Character import Character
 from model.Ship import Ship
 
 #game variables
 SCREEN_WIDTH, SCREEN_HEIGHT = 600, 400
 dark_sky = (14, 15, 70)
 red = (255, 10, 10)
+green = (10, 255, 10)
 #window init
 pygame.init()
 win = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -22,7 +26,7 @@ alien_left_move = False
 def main():
     global is_running, alien_left_move
     ship = Ship(SCREEN_WIDTH//2, SCREEN_HEIGHT - 30, 10, 10)
-    ship.draw(win)
+    ship.draw()
     shot_counter = 0
     level = Level.Level(1)
     while is_running:
@@ -43,15 +47,21 @@ def main():
         if keys[pygame.K_DOWN]:
             ship.move(0, 10)
 
-        level.draw_components(win, ship)
+        level.draw_components(ship)
 
-        if shot_counter % 10 == 0:
-            ship.shot(win)
-        if shot_counter % 20 == 5:
-            level.move_aliens(alien_left_move, False)
-            alien_left_move = not alien_left_move
-        if shot_counter % 50 == 0:
-            level.move_aliens(False, True)
+        if level.alive_aliens:
+            if shot_counter % 10 == 0:
+                ship.shot()
+            if shot_counter % 20 == 5:
+                level.move_aliens(alien_left_move, False)
+                alien_left_move = not alien_left_move
+            if shot_counter % 40 == 20:
+                alien = random.choice(level.alive_aliens)
+                level.alien_shots += [Character.Shot(alien.x + SCREEN_WIDTH // 40, alien.y + SCREEN_HEIGHT // 30)]
+            if shot_counter % 50 == 0:
+                level.move_aliens(False, True)
+        if not level.alive_aliens:
+            level = Level.Level(level.number + 1, level.score)
 
         level.check_collision(ship)
 
