@@ -1,4 +1,5 @@
-import pygame, os
+import pygame
+import os
 
 from model import Main
 
@@ -18,5 +19,5 @@ class Character:
 
     def draw(self, win):
         image = pygame.image.load(os.path.join('images', self.image_name))
-        image = pygame.transform.scale(image, (Main.SCREEN_WIDTH // 17, Main.SCREEN_HEIGHT // 15)).convert()
+        image = pygame.transform.scale(image, (Main.SCREEN_WIDTH // 17, Main.SCREEN_HEIGHT // 15)).convert_alpha()
         win.blit(image, (self.x, self.y))
