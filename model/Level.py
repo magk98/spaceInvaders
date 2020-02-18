@@ -2,7 +2,7 @@ import pygame
 
 from model import Main
 from model.Alien import Alien
-
+#todo: alien-ship collision, aliens border, bonuses, blockades etc.
 
 class Level:
     def __init__(self, _number, _score=0):
