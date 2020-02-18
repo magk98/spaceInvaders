@@ -1,10 +1,8 @@
-import pygame, os
+import pygame
+import os
 
-#alien = pygame.image.load(os.path.join('images', 'alien.png'))
+from model import Main
 from model.Character import Character
-
-dark_sky = (14, 15, 70)
-SCREEN_WIDTH, SCREEN_HEIGHT = 300, 200
 
 
 class Alien(Character):
@@ -13,8 +11,6 @@ class Alien(Character):
         self.image_name = 'alien.png'
 
     def move(self, x_diff, y_diff):
-        global SCREEN_HEIGHT, SCREEN_WIDTH
-        if 0 <= self.x + x_diff < SCREEN_WIDTH - 15 and 0 <= self.y + y_diff < SCREEN_HEIGHT - 15:
+        if 0 <= self.x + x_diff < Main.SCREEN_WIDTH - 15 and 0 <= self.y + y_diff < Main.SCREEN_HEIGHT - 15:
             self.x += x_diff
             self.y += y_diff
-

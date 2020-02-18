@@ -1,18 +1,18 @@
 import pygame
 import os
+
+from model import Level
 from model.Ship import Ship
 
 #window init
-
 pygame.init()
-SCREEN_WIDTH, SCREEN_HEIGHT = 300, 200
+SCREEN_WIDTH, SCREEN_HEIGHT = 600, 400
 dark_sky = (14, 15, 70)
+red = (255, 10, 10)
 win = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Space Invaders')
 win.fill(dark_sky)
 
-#images load
-#alien = pygame.image.load(os.path.join('images', 'alien.png'))
 is_running = True
 
 
@@ -21,6 +21,7 @@ def main():
     ship = Ship(SCREEN_WIDTH//2, SCREEN_HEIGHT - 30, 10, 10)
     ship.draw(win)
     shot_counter = 0
+    level = Level.Level(1)
     while is_running:
         pygame.time.delay(40)
         shot_counter += 1
@@ -39,12 +40,16 @@ def main():
         if keys[pygame.K_DOWN]:
             ship.move(0, 10)
         ship.draw(win)
+        level.draw_aliens(win)
 
-        if shot_counter % 10 == 0:
+        if shot_counter % 15 == 0:
             ship.shot(win)
         for shot in ship.shots:
             shot.draw(win, ship)
             shot.move()
+
+        pygame.display.update()
+        win.fill(dark_sky)
 
     pygame.quit()
 

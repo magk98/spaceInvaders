@@ -1,10 +1,7 @@
 import pygame, os
 
+from model import Main
 from model.Character import Character
-
-dark_sky = (14, 15, 70)
-red = (255, 10, 10)
-SCREEN_WIDTH, SCREEN_HEIGHT = 300, 200
 
 
 class Ship(Character):
@@ -14,11 +11,8 @@ class Ship(Character):
         self.shots = []
 
     def shot(self, win):
-        self.shots += [Ship.Shot(self.x + 8, self.y)]
-        #pygame.draw.rect(win, red, (x, y, 4, 8))
-        pygame.display.flip()
+        self.shots += [Ship.Shot(self.x + Main.SCREEN_WIDTH // 40, self.y)]
         self.draw(win)
-        win.fill(dark_sky)
 
     class Shot:
         def __init__(self, _x, _y):
@@ -26,14 +20,11 @@ class Ship(Character):
             self.y = _y
 
         def draw(self, win, ship):
-            pygame.draw.rect(win, red, (self.x - 1, self.y, 4, 8))
-            if self.y > SCREEN_HEIGHT:
+            pygame.draw.rect(win, Main.red, (self.x - 1, self.y, 4, 8))
+            if self.y > Main.SCREEN_HEIGHT:
                 ship.shots.remove(self)
 
         def move(self):
-            global SCREEN_HEIGHT, SCREEN_WIDTH
             x_diff, y_diff = 0, -8
             self.x += x_diff
             self.y += y_diff
-
-
